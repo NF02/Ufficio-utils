@@ -1,0 +1,30 @@
+.TH FOSSIL 1 "20 Marzo 2026" "ufficio-utils 1.0" "Manuale Utente"
+.SH NOME
+fossil \- Recupero rapido di file e contesti di lavoro (Save the Ball)
+.SH SINTASSI
+.B fossil
+[\fB\-m\fR \fImenu\fR] [\fB\-p\fR \fIpercorso\fR]
+.SH DESCRIZIONE
+\fBfossil\fR è un componente della suite \fBufficio-utils\fR progettato per massimizzare l'efficienza dell'operatore.
+Permette di localizzare istantaneamente file "fossilizzati" nel file system e di proiettare l'utente nel relativo contesto operativo (Terminale, File Manager o Applicazione predefinita).
+.PP
+Lo scopo principale è "salvare la palla" durante sessioni di lavoro intense, riducendo a zero i tempi morti di navigazione manuale tra le directory.
+.SH OPZIONI
+.TP
+.BI \-m " motore"
+Specifica l'interfaccia di ricerca. I valori supportati sono: \fBfzf\fR (default), \fBrofi\fR, \fBwofi\fR, \fBfuzzel\fR.
+.TP
+.BI \-p " percorso"
+Specifica la directory radice da cui iniziare lo "scavo". Di default è la \fB$HOME\fR dell'utente.
+.SH AZIONI DISPONIBILI
+Dopo la selezione di un file, l'operatore può:
+.IP \(bu 2
+\fBApri (XDG)\fR: Lancia il file con l'associazione MIME predefinita.
+.IP \(bu 2
+\fBMostra in File Manager\fR: Apre il file manager nella cartella contenente il reperto.
+.IP \(bu 2
+\fBTerminale (Foot)\fR: Apre una nuova istanza di \fBfoot\fR posizionata nella directory del file.
+.SH LOCALIZZAZIONE
+Il software rileva automaticamente la lingua tramite la variabile \fB$LANG\fR. Supporta Italiano e Inglese.
+.SH AUTORE
+Nicola Ferru (NFVblog) \- Licenza GPLv3.
