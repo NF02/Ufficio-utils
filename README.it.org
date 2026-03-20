@@ -1,0 +1,63 @@
+#+title: Ufficio-utils
+#+author: Nicola Ferru
+
+In questo repository sono raccolti diversi strumenti che utilizzo per il mio lavoro: 
+si tratta di script per Zsh, pensati per rendere l'esperienza desktop su Linux estremamente funzionale. Permettono di gestire e modificare i file in modo pratico e veloce, ottimizzando il flusso di lavoro quotidiano.
+
+** Requisiti e dipendenze
+Il corretto funzionamento di =fossil= dipende dai seguenti strumenti:
+
+- *Ricerca*: ~find~ (preinstallato nella maggior parte delle distribuzioni).
+- *Interfaccia*: Uno tra ~rofi~, ~fuzzel~, ~fzf~ o ~wofi~.
+  - È possibile specificare il motore preferito tramite il parametro ~-m~.
+- *Integrazione Office*: ~pcmanfm~ (file manager) e ~foot~ (terminale emulator) per il salto contestuale.
+
+#+begin_quote
+Lo script utilizza ~xdg-open~ come fallback: se il tuo file manager è impostato correttamente nel file =mimeapps.list= dell'utente, =fossil= lo rileverà automaticamente.
+#+end_quote
+
+** Installazione delle dipendenze
+I pacchetti necessari variano in base alla distribuzione. È sufficiente installare il motore di ricerca preferito (es. ~fzf~ o ~rofi~):
+
+#+begin_src shell
+  # Arch Linux e derivate
+  sudo pacman -S rofi fzf xdg-utils
+
+  # Fedora / CentOS / RHEL
+  sudo dnf install rofi fzf xdg-utils
+
+  # Debian / Ubuntu / Mint
+  sudo apt install rofi fzf xdg-utils
+
+  # Void Linux
+  sudo xbps-install -S fzf rofi xdg-utils
+#+end_src
+
+** Configurazione del File Manager (MIME)
+Per garantire che =fossil= utilizzi il tuo file manager preferito, assicurati di averlo impostato come handler per le directory:
+
+#+begin_src shell
+  # Esempio per impostare PCManFM
+  xdg-mime default pcmanfm.desktop inode/directory
+#+end_src
+
+** Nota per ambienti GNOME/KDE
+Se utilizzi GNOME o KDE, il comando per impostare il file manager predefinito 
+richiede il nome completo del file =.desktop=:
+
+#+begin_src shell
+  # Per GNOME (Nautilus)
+  xdg-mime default org.gnome.Nautilus.desktop inode/directory
+
+  # Per KDE (Dolphin)
+  xdg-mime default org.kde.dolphin.desktop inode/directory
+#+end_src
+
+Se questi nomi non dovessero corrispondere, è possibile verificare l'esatto 
+nome del file =.desktop= presente sul sistema con:
+
+#+begin_src shell
+  ls /usr/share/applications | grep -E 'nautilus|dolphin|thunar|pcmanfm'
+#+end_src
+
+In questo modo, l'ambiguità viene superata istantaneamente.

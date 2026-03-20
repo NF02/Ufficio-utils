@@ -1,26 +1,25 @@
 #+title: Ufficio-utils
 #+author: Nicola Ferru
 
-In questo repository sono raccolti diversi strumenti che utilizzo per il mio lavoro: 
-si tratta di script per Zsh, pensati per rendere l'esperienza desktop su Linux estremamente funzionale. Permettono di gestire e modificare i file in modo pratico e veloce, ottimizzando il flusso di lavoro quotidiano.
+This repository gathers several tools I use for my daily work: a collection of Zsh scripts designed to make the Linux desktop experience extremely functional. They allow for practical and fast file management and editing, optimizing the daily workflow and "saving the ball" during busy sessions.
 
-** Requisiti e dipendenze
-Il corretto funzionamento di =fossil= dipende dai seguenti strumenti:
+** Requirements and Dependencies
+The correct operation of =fossil= depends on the following tools:
 
-- *Ricerca*: ~find~ (preinstallato nella maggior parte delle distribuzioni).
-- *Interfaccia*: Uno tra ~rofi~, ~fuzzel~, ~fzf~ o ~wofi~.
-  - È possibile specificare il motore preferito tramite il parametro ~-m~.
-- *Integrazione Office*: ~pcmanfm~ (file manager) e ~foot~ (terminale emulator) per il salto contestuale.
+- *Search*: ~find~ (pre-installed on most distributions).
+- *Interface*: One of ~rofi~, ~fuzzel~, ~fzf~, or ~wofi~.
+  - You can specify your preferred engine using the ~-m~ parameter.
+- *Office Integration*: ~pcmanfm~ (file manager) and ~foot~ (terminal emulator) for seamless contextual jumping.
 
 #+begin_quote
-Lo script utilizza ~xdg-open~ come fallback: se il tuo file manager è impostato correttamente nel file =mimeapps.list= dell'utente, =fossil= lo rileverà automaticamente.
+The script uses ~xdg-open~ as a fallback: if your file manager is correctly configured in the user's =mimeapps.list= file, =fossil= will detect it automatically.
 #+end_quote
 
-** Installazione delle dipendenze
-I pacchetti necessari variano in base alla distribuzione. È sufficiente installare il motore di ricerca preferito (es. ~fzf~ o ~rofi~):
+** Installing Dependencies
+Required packages vary by distribution. Simply install your preferred search engine (e.g., ~fzf~ or ~rofi~):
 
 #+begin_src shell
-  # Arch Linux e derivate
+  # Arch Linux and derivatives
   sudo pacman -S rofi fzf xdg-utils
 
   # Fedora / CentOS / RHEL
@@ -33,31 +32,29 @@ I pacchetti necessari variano in base alla distribuzione. È sufficiente install
   sudo xbps-install -S fzf rofi xdg-utils
 #+end_src
 
-** Configurazione del File Manager (MIME)
-Per garantire che =fossil= utilizzi il tuo file manager preferito, assicurati di averlo impostato come handler per le directory:
+** File Manager Configuration (MIME)
+To ensure =fossil= uses your preferred file manager, make sure it is set as the default handler for directories:
 
 #+begin_src shell
-  # Esempio per impostare PCManFM
+  # Example for setting PCManFM
   xdg-mime default pcmanfm.desktop inode/directory
 #+end_src
 
-** Nota per ambienti GNOME/KDE
-Se utilizzi GNOME o KDE, il comando per impostare il file manager predefinito 
-richiede il nome completo del file =.desktop=:
+** Note for GNOME/KDE Environments
+If you are using GNOME or KDE, the command to set the default file manager requires the full =.desktop= file name:
 
 #+begin_src shell
-  # Per GNOME (Nautilus)
+  # For GNOME (Nautilus)
   xdg-mime default org.gnome.Nautilus.desktop inode/directory
 
-  # Per KDE (Dolphin)
+  # For KDE (Dolphin)
   xdg-mime default org.kde.dolphin.desktop inode/directory
 #+end_src
 
-Se questi nomi non dovessero corrispondere, è possibile verificare l'esatto 
-nome del file =.desktop= presente sul sistema con:
+Should these names not match, you can verify the exact =.desktop= filename present on your system with:
 
 #+begin_src shell
   ls /usr/share/applications | grep -E 'nautilus|dolphin|thunar|pcmanfm'
 #+end_src
 
-In questo modo, l'ambiguità viene superata istantaneamente.
+This instantly resolves any naming ambiguity.
