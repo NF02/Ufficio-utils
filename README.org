@@ -40,3 +40,24 @@ Per garantire che =fossil= utilizzi il tuo file manager preferito, assicurati di
   # Esempio per impostare PCManFM
   xdg-mime default pcmanfm.desktop inode/directory
 #+end_src
+
+** Nota per ambienti GNOME/KDE
+Se utilizzi GNOME o KDE, il comando per impostare il file manager predefinito 
+richiede il nome completo del file =.desktop=:
+
+#+begin_src shell
+  # Per GNOME (Nautilus)
+  xdg-mime default org.gnome.Nautilus.desktop inode/directory
+
+  # Per KDE (Dolphin)
+  xdg-mime default org.kde.dolphin.desktop inode/directory
+#+end_src
+
+Se questi nomi non dovessero corrispondere, è possibile verificare l'esatto 
+nome del file =.desktop= presente sul sistema con:
+
+#+begin_src shell
+  ls /usr/share/applications | grep -E 'nautilus|dolphin|thunar|pcmanfm'
+#+end_src
+
+In questo modo, l'ambiguità viene superata istantaneamente.
