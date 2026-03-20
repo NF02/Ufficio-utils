@@ -1,0 +1,18 @@
+#+title: Ufficio-utils
+#+author: Nicola Ferru
+
+In questo repository sono raccolti diversi strumenti che utilizzo per il mio lavoro: 
+si tratta di script per Zsh, pensati per rendere l'esperienza desktop su Linux estremamente funzionale. Permettono di gestire e modificare i file in modo pratico e veloce, ottimizzando il flusso di lavoro quotidiano.
+
+** Requisiti e dipendenze
+Il corretto funzionamento di =fossil= dipende dai seguenti strumenti:
+
+- *Ricerca*: ~find~ (preinstallato nella maggior parte delle distribuzioni).
+- *Interfaccia*: Uno tra ~rofi~, ~fuzzel~, ~fzf~ o ~wofi~.
+  - È possibile specificare il motore preferito tramite il parametro ~-m~.
+- *Integrazione Office*: ~pcmanfm~ (file manager) e ~foot~ (terminale emulator) per il salto contestuale.
+
+#+begin_note
+Lo script utilizza ~xdg-open~ come fallback: se il tuo file manager è impostato correttamente nel file =mimeapps.list= dell'utente, =fossil= lo rileverà automaticamente.
+#+end_note
+
