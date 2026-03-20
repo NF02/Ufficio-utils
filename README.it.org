@@ -2,6 +2,7 @@
 #+author: Nicola Ferru
 
 [[file:README.org][file:https://img.shields.io/badge/lang-en-red.svg]]
+
 In questo repository sono raccolti diversi strumecnti che utilizzo per il mio lavoro: 
 si tratta di script per Zsh, pensati per rendere l'esperienza desktop su Linux estremamente funzionale. Permettono di gestire e modificare i file in modo pratico e veloce, ottimizzando il flusso di lavoro quotidiano.
 
