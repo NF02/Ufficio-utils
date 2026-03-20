@@ -1,0 +1,93 @@
+#!/bin/env zsh
+#  ▗▄▄▄▖                 █  ▗▄▖  
+#  ▐▛▀▀▘                 ▀  ▝▜▌  
+#  ▐▌    ▟█▙ ▗▟██▖▗▟██▖ ██   ▐▌  
+#  ▐███ ▐▛ ▜▌▐▙▄▖▘▐▙▄▖▘  █   ▐▌  
+#  ▐▌   ▐▌ ▐▌ ▀▀█▖ ▀▀█▖  █   ▐▌  
+#  ▐▌   ▝█▄█▘▐▄▄▟▌▐▄▄▟▌▗▄█▄▖ ▐▙▄ 
+#  ▝▘    ▝▀▘  ▀▀▀  ▀▀▀ ▝▀▀▀▘  ▀▀
+# -----------------------------------
+# Author: Nicola Ferru Aka NFVblog
+# License: GPLv3
+# Description: It allows you to find
+#              what you have taken
+# -----------------------------------
+
+# --- LOCALIZZAZIONE (i18n) ---
+if [[ "$LANG" == it* ]]; then
+    MSG_PROMPT="🦴 Defossilizza:"
+    MSG_ACTION="Azione per"
+    OPT_OPEN="📂 Apri (XDG)"
+    OPT_FM="📁 Mostra in file manager"
+    OPT_TERM="💻 Terminale (Foot)"
+    OPT_CANCEL="❌ Annulla"
+    MSG_USAGE="Uso: $0 [-m rofi|wofi|fuzzel|fzf] [-p percorso]"
+else
+    MSG_PROMPT="🦴 Defossilize:"
+    MSG_ACTION="Action for"
+    OPT_OPEN="📂 Open (XDG)"
+    OPT_FM="📁 Show in file manager"
+    OPT_TERM="💻 Terminal (Foot)"
+    OPT_CANCEL="❌ Cancel"
+    MSG_USAGE="Usage: $0 [-m rofi|wofi|fuzzel|fzf] [-p path]"
+fi
+
+# --- CONFIGURAZIONE ---
+MENU_TYPE="fzf"
+SEARCH_ROOT="${HOME}"
+
+# Gestione Flag
+while getopts "m:p:" opt; do
+    case $opt in
+        m) MENU_TYPE=$OPTARG ;;
+        p) SEARCH_ROOT=$OPTARG ;;
+        *) echo "$MSG_USAGE"; exit 1 ;;
+    esac
+done
+
+# --- MOTORE DI SELEZIONE ---
+run_menu() {
+    local prompt="$1"
+    local options="$2"
+    case "$MENU_TYPE" in
+        rofi)   echo -e "$options" | rofi -dmenu -p "$prompt" -i ;;
+        wofi)   echo -e "$options" | wofi --dmenu --prompt "$prompt" -i ;;
+        fuzzel) echo -e "$options" | fuzzel --dmenu --prompt "$prompt " ;;
+        *)      echo -e "$options" | fzf --prompt "$prompt " ;;
+    esac
+}
+
+# --- 1. RICERCA ---
+FILES=$(find "$SEARCH_ROOT" -maxdepth 4 -not -path '*/.*' -type f 2>/dev/null)
+
+[[ -z "$FILES" ]] && exit 0
+FILE_PATH=$(run_menu "$MSG_PROMPT" "$FILES")
+[[ -z "$FILE_PATH" ]] && exit 0
+
+# --- 2. AZIONI ---
+ACTIONS="${OPT_OPEN}\n${OPT_FM}\n${OPT_TERM}\n${OPT_CANCEL}"
+SELECTED_ACTION=$(run_menu "${MSG_ACTION} $(basename "$FILE_PATH")" "$ACTIONS")
+
+# --- 3. ESECUZIONE ---
+case "$SELECTED_ACTION" in
+    *XDG*|*Open*)
+        xdg-open "$FILE_PATH" &>/dev/null &
+        ;;
+    *PCManFM*|*Show*)
+        TARGET_DIR="$(dirname "$FILE_PATH")"
+        if command -v pcmanfm &>/dev/null; then
+            pcmanfm "$TARGET_DIR" &>/dev/null &
+        else
+            xdg-open "$TARGET_DIR" &>/dev/null &
+        fi
+        ;;
+    *Terminale*|*Terminal*)
+        TARGET_DIR="$(dirname "$FILE_PATH")"
+        foot --title="📦 Context: $TARGET_DIR" \
+             --working-directory="$TARGET_DIR" \
+             zsh &
+        ;;
+    *)
+        exit 0
+        ;;
+esac
