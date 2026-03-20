@@ -1,6 +1,6 @@
 #+title: Ufficio-utils
 #+author: Nicola Ferru
-
+[[file:README.it.org][file:https://img.shields.io/badge/lang-it-green.svg]]
 This repository gathers several tools I use for my daily work: a collection of Zsh scripts designed to make the Linux desktop experience extremely functional. They allow for practical and fast file management and editing, optimizing the daily workflow and "saving the ball" during busy sessions.
 
 ** Requirements and Dependencies
