@@ -12,7 +12,7 @@ Il corretto funzionamento di =fossil= dipende dai seguenti strumenti:
   - È possibile specificare il motore preferito tramite il parametro ~-m~.
 - *Integrazione Office*: ~pcmanfm~ (file manager) e ~foot~ (terminale emulator) per il salto contestuale.
 
-#+begin_note
+#+begin_quote
 Lo script utilizza ~xdg-open~ come fallback: se il tuo file manager è impostato correttamente nel file =mimeapps.list= dell'utente, =fossil= lo rileverà automaticamente.
-#+end_note
+#+end_quote
 
